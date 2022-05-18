@@ -22,6 +22,22 @@ subnet = network.Subnet(
     address_prefix="10.0.0.0/24",
     virtual_network_name=vnet.name
 )
+
+# Create a Public IP
+example_public_ip = azure.network.PublicIp("examplePublicIp",
+                                           location="West US",
+                                           resource_group_name="demo-pulumi-rg",
+                                           allocation_method="Static")
+
+# Create a Loadbalancer
+
+example_load_balancer = azure.lb.LoadBalancer("exampleLoadBalancer",
+                                              location="West US",
+                                              resource_group_name="demo-pulumi-rg",
+                                              frontend_ip_configurations=[azure.lb.LoadBalancerFrontendIpConfigurationArgs(
+                                                  name="PublicIPAddress",
+                                                  public_ip_address_id=example_public_ip.id,
+                                              )])
 # Create an Azure Resource Group
 resource_group = resources.ResourceGroup('demo-pulumi-rg')
 
