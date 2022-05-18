@@ -2,9 +2,8 @@
 
 import pulumi
 from pulumi_azure_native import storage
-from pulumi_azure_native import resources
+from pulumi_azure_native import resources, network
 import pulumi_azure_native as azure_native
-from pulumi_azure_native import resources, containerservice, network, authorization
 
 prefix = "demo"
 # Create a VNET
