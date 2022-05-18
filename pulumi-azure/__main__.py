@@ -17,8 +17,8 @@ vnet = network.VirtualNetwork(
 )
 # Create a Subnet
 subnet = network.Subnet(
-    f"{prefix}-subnet",
-    resource_group_name=rg.name,
+    "dev-subnet",
+    resource_group_name="demo-pulumi-rg",
     address_prefix="10.0.0.0/24",
     virtual_network_name=vnet.name
 )
