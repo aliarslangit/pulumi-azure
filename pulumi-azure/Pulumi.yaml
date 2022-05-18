@@ -1,0 +1,6 @@
+name: demo-azure
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: demo-azure
