@@ -23,11 +23,6 @@ import pulumi_azure_native as azure_native
 #     virtual_network_name=vnet.name
 # )
 
-# Create a Public IP
-example_public_ip = azure.network.PublicIp("examplePublicIp",
-                                           location="East US",
-                                           resource_group_name="demo-pulumi-rg",
-                                           allocation_method="Static")
 
 # # Create a Loadbalancer
 
@@ -40,7 +35,11 @@ example_public_ip = azure.network.PublicIp("examplePublicIp",
 #                                               )])
 # Create an Azure Resource Group
 resource_group = resources.ResourceGroup('demo-pulumi-rg')
-
+# Create a Public IP
+example_public_ip = azure.network.PublicIp("examplePublicIp",
+                                           location="East US",
+                                           resource_group_name="demo-pulumi-rg",
+                                           allocation_method="Static")
 # Create an Azure resource (Storage Account)
 account = storage.StorageAccount('pulumistdemo',
                                  resource_group_name=resource_group.name,
