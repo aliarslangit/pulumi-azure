@@ -4,12 +4,30 @@ import pulumi
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources
 import pulumi_azure_native as azure_native
+from pulumi_azure_native import resources, containerservice, network, authorization
 
+
+# Create a VNET
+vnet = network.VirtualNetwork(
+    f"{prefix}-vnet",
+    location=rg.location,
+    resource_group_name=rg.name,
+    address_space={
+        "address_prefixes": ["10.0.0.0/16"],
+    }
+)
+# Create a Subnet
+subnet = network.Subnet(
+    f"{prefix}-subnet",
+    resource_group_name=rg.name,
+    address_prefix="10.0.0.0/24",
+    virtual_network_name=vnet.name
+)
 # Create an Azure Resource Group
-resource_group = resources.ResourceGroup('cmp-pulumi-rg')
+resource_group = resources.ResourceGroup('demo-pulumi-rg')
 
 # Create an Azure resource (Storage Account)
-account = storage.StorageAccount('pulumistcmp',
+account = storage.StorageAccount('pulumistdemo',
                                  resource_group_name=resource_group.name,
                                  sku=storage.SkuArgs(
                                      name=storage.SkuName.STANDARD_LRS,
@@ -30,9 +48,11 @@ app_service_plan = azure_native.web.AppServicePlan("appServicePlan",
                                                        tier="Premium",
                                                    ))
 
-# Create an App Servie
-app_service = azure_native.web.WebApp(
-    "demoappforcmp", location="East US", server_farm_id=pulumi.export("id", id))
+# # Create an App Servie
+# app_service = azure_native.web.WebApp(
+#     "demoappfordemo", location="East US", server_farm_id=pulumi.export("id", id))
+
+
 # Export the primary key of the Storage Account
 primary_key = pulumi.Output.all(resource_group.name, account.name) \
     .apply(lambda args: storage.list_storage_account_keys(
