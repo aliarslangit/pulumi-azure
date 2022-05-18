@@ -1,7 +1,7 @@
 """An Azure RM Python Pulumi program"""
 
 import pulumi
-import pulumi_azure as azure
+from pulumi_azure import pulumi_azure as azure
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources
 
