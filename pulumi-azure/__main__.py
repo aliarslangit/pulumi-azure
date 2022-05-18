@@ -1,9 +1,9 @@
 """An Azure RM Python Pulumi program"""
 
 import pulumi
-from pulumi_azure import pulumi_azure as azure
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources
+import pulumi_azure_native as azure_native
 
 # Create an Azure Resource Group
 resource_group = resources.ResourceGroup('cmp-pulumi-rg')
@@ -16,18 +16,19 @@ account = storage.StorageAccount('pulumistcmp',
                                  ),
                                  kind=storage.Kind.STORAGE_V2)
 
-# Create an App Service
-app_service = azure.appservice.AppService("exampleAppService",
-                                          location=example_resource_group.location,
-                                          resource_group_name=example_resource_group.name,
-                                          app_service_plan_id=example_plan.id,
-                                          site_config=azure.appservice.AppServiceSiteConfigArgs(
-                                              dotnet_framework_version="v4.0",
-                                              scm_type="LocalGit",
-                                          ),
-                                          app_settings={
-                                              "SOME_KEY": "some-value",
-                                          })
+# Create an App Service Plan
+app_service_plan = azure_native.web.AppServicePlan("appServicePlan",
+                                                   kind="app",
+                                                   location="East US",
+                                                   name="testsf6141",
+                                                   resource_group_name="testrg123",
+                                                   sku=azure_native.web.SkuDescriptionArgs(
+                                                       capacity=1,
+                                                       family="P",
+                                                       name="P1",
+                                                       size="P1",
+                                                       tier="Premium",
+                                                   ))
 
 # Export the primary key of the Storage Account
 primary_key = pulumi.Output.all(resource_group.name, account.name) \
