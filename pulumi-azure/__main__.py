@@ -35,11 +35,11 @@ import pulumi_azure_native as azure_native
 #                                               )])
 # Create an Azure Resource Group
 resource_group = resources.ResourceGroup('demo-pulumi-rg')
-# Create a Public IP
-example_public_ip = azure.network.PublicIp("examplePublicIp",
-                                           location="East US",
-                                           resource_group_name="demo-pulumi-rg",
-                                           allocation_method="Static")
+# # Create a Public IP
+# example_public_ip = azure.network.PublicIp("examplePublicIp",
+#                                            location="East US",
+#                                            resource_group_name="demo-pulumi-rg",
+#                                            allocation_method="Static")
 # Create an Azure resource (Storage Account)
 account = storage.StorageAccount('pulumistdemo',
                                  resource_group_name=resource_group.name,
