@@ -10,8 +10,8 @@ prefix = "demo"
 # Create a VNET
 vnet = network.VirtualNetwork(
     f"{prefix}-vnet",
-    location=rg.location,
-    resource_group_name=rg.name,
+    location="East US",
+    resource_group_name="demo-pulumi-rg",
     address_space={
         "address_prefixes": ["10.0.0.0/16"],
     }
