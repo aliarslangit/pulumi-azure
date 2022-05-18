@@ -6,7 +6,7 @@ from pulumi_azure_native import resources
 import pulumi_azure_native as azure_native
 from pulumi_azure_native import resources, containerservice, network, authorization
 
-
+var prefix = "demo"
 # Create a VNET
 vnet = network.VirtualNetwork(
     f"{prefix}-vnet",
