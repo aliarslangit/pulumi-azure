@@ -30,6 +30,9 @@ app_service_plan = azure_native.web.AppServicePlan("appServicePlan",
                                                        tier="Premium",
                                                    ))
 
+# Create an App Servie
+app_service = azure_native.web.WebApp(
+    "demoappforcmp", location="East US", server_farm_id=pulumi.export("id", id))
 # Export the primary key of the Storage Account
 primary_key = pulumi.Output.all(resource_group.name, account.name) \
     .apply(lambda args: storage.list_storage_account_keys(
