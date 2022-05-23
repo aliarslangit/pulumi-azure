@@ -25,26 +25,36 @@ acr = azure_native.containerregistry.Registry("registry",
                                               })
 
 # create MySQL
-mysqlserver = azure_native.mysql.Server("exampleServer",
-                                        location=resource_group.location,
-                                        resource_group_name=resource_group.name,
-                                        administrator_login="mysqladminun",
-                                        administrator_login_password="H@Sh1CoR3!",
-                                        sku_name="GP_Gen5_2",
-                                        storage_mb=5120,
-                                        version="5.7",
-                                        auto_grow_enabled=True,
-                                        backup_retention_days=7,
-                                        geo_redundant_backup_enabled=True,
-                                        infrastructure_encryption_enabled=True,
-                                        public_network_access_enabled=False,
-                                        ssl_enforcement_enabled=True,
-                                        ssl_minimal_tls_version_enforced="TLS1_2")
-example_database = azure_native.mysql.Database("exampleDatabase",
-                                               resource_group_name=resource_group.name,
-                                               server_name=mysqlserver.name,
-                                               charset="utf8",
-                                               collation="utf8_unicode_ci")
+mysqlserver = azure_native.dbformysql.Server("server",
+                                             location=resource_group.location,
+                                             properties={
+                                                 "administratorLogin": "cloudsa",
+                                                 "administratorLoginPassword": "<administratorLoginPassword>",
+                                                 "createMode": "Default",
+                                                 "sslEnforcement": azure_native.dbformysql.SslEnforcementEnum.ENABLED,
+                                                 "storageProfile": azure_native.dbformysql.StorageProfileArgs(
+                                                     backup_retention_days=7,
+                                                     geo_redundant_backup="Enabled",
+                                                     storage_mb=128000,
+                                                 ),
+                                             },
+                                             resource_group_name=resource_group.name,
+                                             server_name="mysqltestsvc4",
+                                             sku=azure_native.dbformysql.SkuArgs(
+                                                 capacity=2,
+                                                 family="Gen5",
+                                                 name="GP_Gen5_2",
+                                                 tier="GeneralPurpose",
+                                             ),
+                                             tags={
+                                                 "ElasticServer": "1",
+                                             })
+database = azure_native.dbformysql.Database("database",
+                                            charset="utf8",
+                                            collation="utf8_general_ci",
+                                            database_name="db1",
+                                            resource_group_name=resource_group.name,
+                                            server_name="testserver")
 
 # prefix = "demo"
 # # Create a VNET
