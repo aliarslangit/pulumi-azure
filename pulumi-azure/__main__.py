@@ -54,7 +54,7 @@ database = azure_native.dbformysql.Database("database",
                                             collation="utf8_general_ci",
                                             database_name="db1",
                                             resource_group_name=resource_group.name,
-                                            server_name="testserver")
+                                            server_name=mysqlserver.name)
 
 # Create an Azure resource (Storage Account)
 account = azure_native.storage.StorageAccount('pulumistdemo',
