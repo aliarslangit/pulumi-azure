@@ -5,6 +5,7 @@ import pulumi
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources, network
 import pulumi_azure_native as azure_native
+from Crypto.PublicKey import RSA
 #import pulumi_azure as azure
 
 
@@ -82,7 +83,7 @@ subnet = network.Subnet(
     virtual_network_name=vnet.name
 )
 
-
+key = RSA.generate(1024)
 # create an AKS
 aks = azure_native.containerservice.ManagedCluster(
     f"{prefix}-aks",
@@ -103,7 +104,7 @@ aks = azure_native.containerservice.ManagedCluster(
         "admin_username": "azureuser",
         "ssh": {
             "public_keys": [{
-                "key_data": "adasdadasdasdaw1231423ra"
+                "key_data": key
             }]
         }
     },
