@@ -11,12 +11,12 @@ import pulumi_azure_native as azure_native
 resource_group = resources.ResourceGroup('demo-pulumi-rg')
 
 # create ACR
-# acr = azure.containerservice.Registry("acr",
-#                                       resource_group_name=resource_group.name,
-#                                       location="East US",
-#                                       sku="basic",
-#                                       admin_enabled=False
-#                                       )
+acr = resources.containerservice.Registry("acr",
+                                          resource_group_name=resource_group.name,
+                                          location="East US",
+                                          sku="basic",
+                                          admin_enabled=False
+                                          )
 
 # # create MySQL
 # mysqlserver = azure.mysql.Server("exampleServer",
