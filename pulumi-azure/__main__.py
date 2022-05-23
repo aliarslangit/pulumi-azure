@@ -56,6 +56,14 @@ database = azure_native.dbformysql.Database("database",
                                             resource_group_name=resource_group.name,
                                             server_name="testserver")
 
+# Create an Azure resource (Storage Account)
+account = azure_native.storage.StorageAccount('pulumistdemo',
+                                              resource_group_name=resource_group.name,
+                                              sku=storage.SkuArgs(
+                                                  name=storage.SkuName.STANDARD_LRS,
+                                              ),
+                                              kind=storage.Kind.STORAGE_V2)
+
 # prefix = "demo"
 # # Create a VNET
 # vnet = network.VirtualNetwork(
@@ -90,13 +98,7 @@ database = azure_native.dbformysql.Database("database",
 #                                            location="East US",
 #                                            resource_group_name="demo-pulumi-rg",
 #                                            allocation_method="Static")
-# # Create an Azure resource (Storage Account)
-# account = storage.StorageAccount('pulumistdemo',
-#                                  resource_group_name=resource_group.name,
-#                                  sku=storage.SkuArgs(
-#                                      name=storage.SkuName.STANDARD_LRS,
-#                                  ),
-#                                  kind=storage.Kind.STORAGE_V2)
+
 
 # # Create an App Service Plan
 # app_service_plan = azure_native.web.AppServicePlan("appServicePlan",
