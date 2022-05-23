@@ -40,11 +40,11 @@ mysqlserver = azure_native.mysql.Server("exampleServer",
                                         public_network_access_enabled=False,
                                         ssl_enforcement_enabled=True,
                                         ssl_minimal_tls_version_enforced="TLS1_2")
-example_database = azure.mysql.Database("exampleDatabase",
-                                        resource_group_name=resource_group.name,
-                                        server_name=mysqlserver.name,
-                                        charset="utf8",
-                                        collation="utf8_unicode_ci")
+example_database = azure_native.mysql.Database("exampleDatabase",
+                                               resource_group_name=resource_group.name,
+                                               server_name=mysqlserver.name,
+                                               charset="utf8",
+                                               collation="utf8_unicode_ci")
 
 # prefix = "demo"
 # # Create a VNET
