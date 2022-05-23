@@ -69,7 +69,7 @@ prefix = "demo"
 vnet = network.VirtualNetwork(
     f"{prefix}-vnet",
     location="East US",
-    resource_group_name="demo-pulumi-rg",
+    resource_group_name=resource_group.name,
     address_space={
         "address_prefixes": ["10.0.0.0/16"],
     }
@@ -77,7 +77,7 @@ vnet = network.VirtualNetwork(
 # Create a Subnet
 subnet = network.Subnet(
     "dev-subnet",
-    resource_group_name="demo-pulumi-rg",
+    resource_group_name=resource_group.name,
     address_prefix="10.0.0.0/24",
     virtual_network_name=vnet.name
 )
