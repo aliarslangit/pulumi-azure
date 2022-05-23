@@ -82,6 +82,26 @@ subnet = network.Subnet(
     virtual_network_name=vnet.name
 )
 
+# Create Azure AD Application for AKS
+app = azure_native.azuread.Application(
+    f"{prefix}-aks-app",
+    display_name=f"{prefix}-aks-app"
+)
+
+# Create service principal for the application so AKS can act on behalf of the application
+sp = azure_native.azuread.ServicePrincipal(
+    "aks-sp",
+    application_id=app.application_id
+)
+
+# Create the service principal password
+sppwd = azure_native.azuread.ServicePrincipalPassword(
+    "aks-sp-pwd",
+    service_principal_id=sp.id,
+    end_date="2099-01-01T00:00:00Z",
+    value="P@ssW0rd!!"
+)
+
 # create an AKS
 aks = azure_native.containerservice.ManagedCluster(
     f"{prefix}-aks",
@@ -106,7 +126,11 @@ aks = azure_native.containerservice.ManagedCluster(
             }]
         }
     },
-    enable_rbac=False,
+    service_principal_profile={
+        "client_id": app.application_id,
+        "secret": sppwd.value
+    },
+    enable_rbac=True,
     network_profile={
         "network_plugin": "azure",
         "service_cidr": "10.10.0.0/16",
