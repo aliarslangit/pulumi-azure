@@ -64,7 +64,7 @@ account = azure_native.storage.StorageAccount('pulumistdemo',
                                               ),
                                               kind=storage.Kind.STORAGE_V2)
 
-prefix = "demo"
+prefix = "demopulumi"
 # Create a VNET
 vnet = network.VirtualNetwork(
     f"{prefix}-vnet",
@@ -80,6 +80,39 @@ subnet = network.Subnet(
     resource_group_name=resource_group.name,
     address_prefix="10.0.0.0/24",
     virtual_network_name=vnet.name
+)
+
+# create an AKS
+aks = azure_native.containerservice.ManagedCluster(
+    f"{prefix}-aks",
+    location=resource_group.location,
+    resource_group_name=resource_group.name,
+    kubernetes_version="1.18.14",
+    dns_prefix="dns",
+    agent_pool_profiles=[{
+        "name": "type1",
+        "mode": "System",
+        "count": 2,
+        "vm_size": "Standard_B2ms",
+        "os_type": azure_native.containerservice.OSType.LINUX,
+        "max_pods": 110,
+        "vnet_subnet_id": subnet.id
+    }],
+    linux_profile={
+        "admin_username": "azureuser",
+        "ssh": {
+            "public_keys": [{
+                "key_data": "adasdadasdasdaw1231423ra"
+            }]
+        }
+    },
+    enable_rbac=True,
+    network_profile={
+        "network_plugin": "azure",
+        "service_cidr": "10.10.0.0/16",
+        "dns_service_ip": "10.10.0.10",
+        "docker_bridge_cidr": "172.17.0.1/16"
+    }, opts=ResourceOptions(depends_on=[subnet_assignment])
 )
 
 
