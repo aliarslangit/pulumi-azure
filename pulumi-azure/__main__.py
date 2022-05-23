@@ -84,7 +84,7 @@ subnet = network.Subnet(
     virtual_network_name=vnet.name
 )
 
-key = RSA.generate(1024)
+
 # create an AKS
 aks = azure_native.containerservice.ManagedCluster(
     f"{prefix}-aks",
@@ -101,14 +101,14 @@ aks = azure_native.containerservice.ManagedCluster(
         "max_pods": 110,
         "vnet_subnet_id": subnet.id
     }],
-    linux_profile={
-        "admin_username": "azureuser",
-        "ssh": {
-            "public_keys": [{
-                "key_data": key
-            }]
-        }
-    },
+    # linux_profile={
+    #     "admin_username": "azureuser",
+    #     "ssh": {
+    #         "public_keys": [{
+    #             "key_data": ""
+    #         }]
+    #     }
+    # },
     service_principal_profile={
         "client_id": "",
         "secret": ""
