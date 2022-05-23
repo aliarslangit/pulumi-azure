@@ -106,7 +106,7 @@ aks = azure_native.containerservice.ManagedCluster(
             }]
         }
     },
-    enable_rbac=True,
+    enable_rbac=False,
     network_profile={
         "network_plugin": "azure",
         "service_cidr": "10.10.0.0/16",
