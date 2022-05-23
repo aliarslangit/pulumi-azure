@@ -64,23 +64,23 @@ account = azure_native.storage.StorageAccount('pulumistdemo',
                                               ),
                                               kind=storage.Kind.STORAGE_V2)
 
-# prefix = "demo"
-# # Create a VNET
-# vnet = network.VirtualNetwork(
-#     f"{prefix}-vnet",
-#     location="East US",
-#     resource_group_name="demo-pulumi-rg",
-#     address_space={
-#         "address_prefixes": ["10.0.0.0/16"],
-#     }
-# )
-# # Create a Subnet
-# subnet = network.Subnet(
-#     "dev-subnet",
-#     resource_group_name="demo-pulumi-rg",
-#     address_prefix="10.0.0.0/24",
-#     virtual_network_name=vnet.name
-# )
+prefix = "demo"
+# Create a VNET
+vnet = network.VirtualNetwork(
+    f"{prefix}-vnet",
+    location="East US",
+    resource_group_name="demo-pulumi-rg",
+    address_space={
+        "address_prefixes": ["10.0.0.0/16"],
+    }
+)
+# Create a Subnet
+subnet = network.Subnet(
+    "dev-subnet",
+    resource_group_name="demo-pulumi-rg",
+    address_prefix="10.0.0.0/24",
+    virtual_network_name=vnet.name
+)
 
 
 # # # Create a Loadbalancer
