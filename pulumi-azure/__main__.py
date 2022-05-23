@@ -90,7 +90,7 @@ aks = azure_native.containerservice.ManagedCluster(
     f"{prefix}-aks",
     location=resource_group.location,
     resource_group_name=resource_group.name,
-    kubernetes_version="1.16.14",
+    kubernetes_version="1.21.9",
     dns_prefix="dns",
     agent_pool_profiles=[{
         "name": "type1",
