@@ -4,7 +4,7 @@ import pulumi
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources, network
 import pulumi_azure_native as azure_native
-import pulumi_azure as azure
+#import pulumi_azure as azure
 
 
 # Create an Azure Resource Group
