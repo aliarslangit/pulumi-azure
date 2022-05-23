@@ -101,7 +101,11 @@ aks = azure_native.containerservice.ManagedCluster(
     }],
     linux_profile={
         "admin_username": "azureuser",
-        "admin_password": "azureP@ssw0rd!",
+        "ssh": {
+            "public_keys": [{
+                "key_data": "adasdadasdasdaw1231423ra"
+            }]
+        }
     },
     service_principal_profile={
         "client_id": "",
