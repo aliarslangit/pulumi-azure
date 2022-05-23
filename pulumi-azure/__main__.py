@@ -18,6 +18,28 @@ acr = azure.containerservice.Registry("acr",
                                       admin_enabled=False
                                       )
 
+# create MySQL
+mysqlserver = azure.mysql.Server("exampleServer",
+                                 location=resource_group.location,
+                                 resource_group_name=resource_group.name,
+                                 administrator_login="mysqladminun",
+                                 administrator_login_password="H@Sh1CoR3!",
+                                 sku_name="GP_Gen5_2",
+                                 storage_mb=5120,
+                                 version="5.7",
+                                 auto_grow_enabled=True,
+                                 backup_retention_days=7,
+                                 geo_redundant_backup_enabled=True,
+                                 infrastructure_encryption_enabled=True,
+                                 public_network_access_enabled=False,
+                                 ssl_enforcement_enabled=True,
+                                 ssl_minimal_tls_version_enforced="TLS1_2")
+example_database = azure.mysql.Database("exampleDatabase",
+                                        resource_group_name=resource_group.name,
+                                        server_name=mysqlserver.name,
+                                        charset="utf8",
+                                        collation="utf8_unicode_ci")
+
 # prefix = "demo"
 # # Create a VNET
 # vnet = network.VirtualNetwork(
