@@ -112,7 +112,7 @@ aks = azure_native.containerservice.ManagedCluster(
         "service_cidr": "10.10.0.0/16",
         "dns_service_ip": "10.10.0.10",
         "docker_bridge_cidr": "172.17.0.1/16"
-    }, opts=ResourceOptions(depends_on=[subnet_assignment])
+    },
 )
 
 
