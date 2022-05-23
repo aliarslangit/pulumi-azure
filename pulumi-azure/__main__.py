@@ -1,5 +1,6 @@
 """An Azure RM Python Pulumi program"""
 
+import resource
 import pulumi
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources, network
@@ -11,12 +12,17 @@ import pulumi_azure_native as azure_native
 resource_group = resources.ResourceGroup('demo-pulumi-rg')
 
 # create ACR
-acr = resources.containerservice.Registry("acr",
-                                          resource_group_name=resource_group.name,
-                                          location="East US",
-                                          sku="basic",
-                                          admin_enabled=False
-                                          )
+acr = resources.containerregistry.Registry("registry",
+                                           admin_user_enabled=True,
+                                           location=resource_group.location,
+                                           registry_name="myRegistryforcmppulumi",
+                                           resource_group_name=resource_group.name,
+                                           sku=azure_native.containerregistry.SkuArgs(
+                                               name="Standard",
+                                           ),
+                                           tags={
+                                               "key": "value",
+                                           })
 
 # # create MySQL
 # mysqlserver = azure.mysql.Server("exampleServer",
