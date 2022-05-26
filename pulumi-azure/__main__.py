@@ -123,22 +123,20 @@ aks = azure_native.containerservice.ManagedCluster(
 )
 
 
-# # # Create a Loadbalancer
+ # Create a Loadbalancer
 
-# example_load_balancer = azure.lb.LoadBalancer("exampleLoadBalancer",
-#                                               location="East US",
-#                                               resource_group_name="demo-pulumi-rg",
-#                                               frontend_ip_configurations=[azure.lb.LoadBalancerFrontendIpConfigurationArgs(
-#                                                   name="PublicIPAddress",
-#                                                   public_ip_address_id=example_public_ip.id,
-#                                               )])
+example_load_balancer = azure.lb.LoadBalancer("exampleLoadBalancer",
+                                          location="East US",
+                                             resource_group_name="demo-pulumi-rg",
+                                              frontend_ip_configurations=[azure.lb.LoadBalancerFrontendIpConfigurationArgs(
+                                               name="PublicIPAddress",
+                                                   public_ip_address_id=example_public_ip.id,
+                                               )])
 
 # # # Create a Public IP
-# example_public_ip = azure.network.PublicIp("examplePublicIp",
-#                                            location="East US",
-#                                            resource_group_name="demo-pulumi-rg",
-#                                            allocation_method="Static")
-
+ example_public_ip = azure.network.PublicIp("examplePublicIp",
+                                            location="East US",      resource_group_name="demo-pulumi-rg",
+                                            allocation_method="Static")
 
 # # Create an App Service Plan
 # app_service_plan = azure_native.web.AppServicePlan("appServicePlan",
